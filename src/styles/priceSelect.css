@@ -1,0 +1,22 @@
+.select{
+    padding: 10px;
+    position: relative;
+    border: 1px solid black;
+    border-radius: 10px;
+    /* width: 60%; */
+}
+.sort-name{
+    padding-left: 10px;
+    position:absolute;
+    top:-16px;
+    background-color: white;
+    padding: 4px;
+
+}
+.select select{
+   border: none;
+    /* height: 0px; */
+    outline: none;
+    width: 150px;
+    font-size: medium;
+}

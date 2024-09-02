@@ -1,0 +1,169 @@
+{
+    "Products":[
+    {
+        "id": 1,
+        "name": "Smartphone",
+        "image": "https://img.freepik.com/free-photo/creative-reels-composition_23-2149711507.jpg?t=st=1722709453~exp=1722713053~hmac=0839459d298d3bdea495486e454fb20b8e5592554c6f3833d645b175bb1fa008&w=2000",
+        "price": 30,
+        "description": "A high-quality smartphone with a powerful processor.",
+        "category": "Electronics"
+    },
+    {
+        "id": 14,
+        "name": "Women's Jacket",
+        "image": "https://img.freepik.com/free-photo/woman-model-demonstrating-winter-cloths_1303-16968.jpg?ga=GA1.1.413494677.1708697011&semt=ais_hybrid",
+        "price": 10,
+        "description": "A warm and fashionable jacket for women.",
+        "category": "Clothing"
+    },
+    {
+        "id": 2,
+        "name": "Laptop",
+        "image": "https://img.freepik.com/free-psd/laptop-blue-background-mock-up_1022-178.jpg?t=st=1722711928~exp=1722715528~hmac=49c1d7695a4ad57cf659de34be13eb43d9c3096057fca1a2c883cfe15c5c8b9d&w=1800",
+        "price": 10,
+        "description": "A sleek laptop with high performance and storage capacity.",
+        "category": "Electronics"
+    },
+
+    {
+        "id": 4,
+        "name": "Smartwatch",
+        "image": "https://img.freepik.com/free-photo/rendering-smart-home-device_23-2151039302.jpg?t=st=1722712045~exp=1722715645~hmac=4e15cbca2599471e79bbbb8d75ff9e7440f86831717a28ce20d801f2212038f6&w=2000",
+        "price": 20,
+        "description": "A stylish smartwatch with fitness tracking features.",
+        "category": "Electronics"
+    },
+    {
+        "id": 5,
+        "name": "Tablet",
+        "image": "https://img.freepik.com/free-psd/tablet-mockup-top-angle-view_7838-365.jpg?t=st=1722712109~exp=1722715709~hmac=1caa3c19355dd10abcaf0f250e651a6be203a1f9c8104dc0d3907c5670d195f1&w=2000",
+        "price": 40,
+        "description": "A lightweight tablet with a high-resolution display.",
+        "category": "Electronics"
+    },
+    {
+        "id": 11,
+        "name": "Men's T-Shirt",
+        "image": "https://img.freepik.com/free-photo/outdoors-photo-glad-stylish-young-man-calling-with-smartphone-wearing-black-hat_8353-6896.jpg?ga=GA1.1.413494677.1708697011&semt=ais_hybrid",
+        "price": 20,
+        "description": "A comfortable cotton t-shirt available in various colors.",
+        "category": "Clothing"
+    },
+    {
+        "id": 6,
+        "name": "Bluetooth Speaker",
+        "image": "https://img.freepik.com/free-photo/high-angle-smart-speaker-home_23-2150171765.jpg?t=st=1722712180~exp=1722715780~hmac=70bed412bad9b575e0d7d6c5b2d4154ddf200147a5cdfc2c9620a7e2aee672ca&w=2000",
+        "price": 75,
+        "description": "Portable Bluetooth speaker with powerful sound.",
+        "category": "Electronics"
+    },
+    {
+        "id": 20,
+        "name": "Women's Sandals",
+        "image": "https://img.freepik.com/free-photo/woman-s-feet-elegant-gladiator-sandals_291049-214.jpg?ga=GA1.1.413494677.1708697011&semt=ais_hybrid",
+        "price": 45,
+        "description": "Comfortable and fashionable sandals for women.",
+        "category": "Clothing"
+    },
+    {
+        "id": 7,
+        "name": "Gaming Console",
+        "image": "https://img.freepik.com/free-photo/view-3d-video-game-controller_23-2151005827.jpg?t=st=1722712270~exp=1722715870~hmac=0c27df02e748d051fc39abbfeddefd7f1939def0552a208e36444483b7af0a54&w=2000",
+        "price": 50,
+        "description": "Next-generation gaming console with immersive graphics.",
+        "category": "Electronics"
+    },
+
+    {
+        "id": 8,
+        "name": "Digital Camera",
+        "image": "https://img.freepik.com/free-photo/high-angle-photo-camera-indoors-still-life_23-2150630966.jpg?t=st=1722712461~exp=1722716061~hmac=92d231b6b4a07aeac206193d79dd12524bac4beddcea127e15dc51721a6fdcef&w=2000",
+        "price": 60,
+        "description": "High-resolution digital camera with advanced features.",
+        "category": "Electronics"
+    },
+    {
+        "id": 9,
+        "name": "Wireless Earbuds",
+        "image": "https://img.freepik.com/free-photo/wireless-earbuds-with-neon-cyberpunk-style-lighting_23-2151074301.jpg?t=st=1722712512~exp=1722716112~hmac=36fbf59ecdb757fad2d8af7d0dae872e11d10a2b96cdd1b7517fc697f87852c9&w=2000",
+        "price": 12,
+        "description": "Compact and lightweight wireless earbuds with great sound quality.",
+        "category": "Electronics"
+    },
+    {
+        "id": 10,
+        "name": "4K TV",
+        "image": "https://img.freepik.com/free-photo/interactive-pink-screen-wall-gallery_53876-95933.jpg?t=st=1722712554~exp=1722716154~hmac=3becfd4a161f16d8b2561fba1a46a7b0842f6c1610cdd0402d2afb0f2a0a60cc&w=2000",
+        "price": 80,
+        "description": "Ultra HD 4K TV with stunning picture quality.",
+        "category": "Electronics"
+    },
+   
+    {
+        "id": 12,
+        "name": "Women's Dress",
+        "image": "https://img.freepik.com/free-photo/young-woman-with-shopping-bags-beautiful-dress_1303-17550.jpg?t=st=1722712645~exp=1722716245~hmac=48e68df8b0e97f392f85abf846ed6ea0059cd9afab52fee1d1fdf050f8305bbf&w=2000",
+        "price": 50,
+        "description": "A stylish summer dress made from lightweight fabric.",
+        "category": "Clothing"
+    },
+    {
+        "id": 13,
+        "name": "Men's Jeans",
+        "image": "https://img.freepik.com/free-photo/fashion-men-accessories-new-trendy-blue-jeans_1357-154.jpg?ga=GA1.1.413494677.1708697011&semt=ais_hybrid",
+        "price": 40,
+        "description": "Classic blue denim jeans with a comfortable fit.",
+        "category": "Clothing"
+    },
+    {
+        "id": 3,
+        "name": "Headphones",
+        "image": "https://img.freepik.com/free-photo/pink-headphones-wireless-digital-device_53876-96804.jpg?t=st=1722711998~exp=1722715598~hmac=5ecb4336ac164859b22ca62dc72848e22b75871e2e5b6b634630a1bbdea32cd9&w=2000",
+        "price": 15,
+        "description": "Noise-canceling over-ear headphones.",
+        "category": "Electronics"
+    },
+    {
+        "id": 15,
+        "name": "Men's Sneakers",
+        "image": "https://img.freepik.com/free-photo/men-s-ankle-sneakers-yellow-street-style-apparel-shoot_53876-119820.jpg?ga=GA1.1.413494677.1708697011&semt=ais_hybrid",
+        "price": 60,
+        "description": "Comfortable and stylish sneakers for men.",
+        "category": "Clothing"
+    },
+    {
+        "id": 16,
+        "name": "Women's Handbag",
+        "image": "https://img.freepik.com/premium-photo/beautiful-trendy-smooth-gray-women-s-handbag-studio-background-created-with-generative-ai_955080-1124.jpg?ga=GA1.1.413494677.1708697011&semt=ais_hybrid",
+        "price": 80,
+        "description": "A chic handbag with plenty of space for essentials.",
+        "category": "Clothing"
+    },
+    {
+        "id": 17,
+        "name": "Men's Suit",
+        "image": "https://img.freepik.com/premium-photo/business-men-s-suit-store_61243-16431.jpg?ga=GA1.1.413494677.1708697011&semt=ais_hybrid",
+        "price": 15,
+        "description": "A classic suit perfect for formal occasions.",
+        "category": "Clothing"
+    },
+    {
+        "id": 18,
+        "name": "Women's Scarf",
+        "image": "https://img.freepik.com/free-photo/woman-holding-end-her-winter-cap_329181-6673.jpg?ga=GA1.1.413494677.1708697011&semt=ais_hybrid",
+        "price": 30,
+        "description": "A beautiful scarf made from soft, lightweight fabric.",
+        "category": "Clothing"
+    },
+    {
+        "id": 19,
+        "name": "Men's Watch",
+        "image": "https://img.freepik.com/premium-photo/stylish-men-s-watch-cufflinks-rings-groom-bride-wedding-accessories-rustic-brown-wooden-background-idea-composition-holiday-concept_180731-5178.jpg?ga=GA1.1.413494677.1708697011&semt=ais_hybrid",
+        "price": 12,
+        "description": "A stylish and functional watch for men.",
+        "category": "Clothing"
+    }
+    
+ 
+]
+}
