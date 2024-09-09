@@ -6,6 +6,7 @@ const intialState={
     priceV:"",
     status:false,
     todo:[],
+    auth:false,
     }
 export const store =legacy_createStore(reducer,intialState)
 

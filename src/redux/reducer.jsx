@@ -11,6 +11,16 @@ export const reducer=(state,{type,payload})=>{
                 ...state,
                 priceV:state.priceV===payload?"":payload
              }  
+        case "AUTH_TRUE":
+            return{
+                ...state,
+                auth:payload
+            }     
+            case "STATUS.":
+            return{
+                ...state,
+                status:payload
+            } 
         default:
             return state
     }

@@ -1,17 +1,19 @@
   import React from 'react'
-  import {ChevronDownIcon} from '@chakra-ui/icons'
+  // import {ChevronDownIcon} from '@chakra-ui/icons'
   
-  import {Box,Heading, Button ,Drawer,DrawerOverlay,DrawerCloseButton,DrawerHeader,DrawerBody,DrawerFooter,DrawerContent,useDisclosure, Stack} from '@chakra-ui/react'
+  import {Box,Button ,Drawer,DrawerCloseButton,DrawerHeader,DrawerBody,DrawerFooter,DrawerContent,useDisclosure, Stack} from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux';
   function DrawerButton() {
       const { isOpen, onOpen, onClose } = useDisclosure()
+
+      console.log(isOpen,onOpen,onClose)
       
       // const [state, setState] = React.useState(false);
       
       const ele=useSelector((store)=>store.value)
-      
+      const status=useSelector((store)=>store.status)
       const price=useSelector((store)=>store.priceV)
-      console.log(price)
+     
       const dispatch=useDispatch()
       const handleToggel=(val)=>{
          dispatch({type:"SELECTED_VAL",payload:val})
@@ -26,29 +28,20 @@ import { useDispatch, useSelector } from 'react-redux';
       
       return (
         <>
-          <Button variant={'ghost'}  onClick={onOpen}>
-          <Heading fontSize="larger">Filter</Heading>
-          <ChevronDownIcon onClick={onOpen} boxSize={'2em'}/>
-          </Button>
-          {/* <ChevronDownIcon onClick={onOpen} boxSize={'2em'}/>  */}
+         
           <Drawer
-            isOpen={isOpen}
+          isOpen={status}
             placement='right'
             onClose={onClose}
-            // finalFocusRef={btnRef}
+          bg={'black'}
           >
-            <DrawerOverlay />
-            <DrawerContent>
-              <DrawerCloseButton />
-              <DrawerHeader>Filter</DrawerHeader>
+         
+            <DrawerContent mt="75px" >
+              <DrawerCloseButton onClick={()=>dispatch({type:"STATUS.",payload:!status})}/>
+              {/* <DrawerHeader>Filter</DrawerHeader> */}
     
               <DrawerBody>
               <Stack>
-                {/* <Box  border='1px solid black'>Electronics</Box>
-                <Box border='1px solid black'>Cloths</Box> */}
-                {/* <Input value="Electronic"></Input><Input value="Clothing"></Input> */}
-                {/* <Button size='md' w='90px'>Electronics</Button><Button size='md' w={20}>Clothing</Button> */}
-                
         <Stack direction="row" spacing={5}>
           <Box
           
