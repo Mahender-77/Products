@@ -1,18 +1,15 @@
 // src/Navbar.js
 import React from 'react';
-import { Box, Flex, Button, Stack, Heading} from '@chakra-ui/react';
+import { Box, Flex, Button, Stack, Heading ,Input,InputGroup,InputLeftElement} from '@chakra-ui/react';
 import {NavLink} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
+import {SearchIcon} from '@chakra-ui/icons'
 
 const Navbar = () => {
-
-  // const bgcolor=useBreakpointValue({
-  //   md:"blue",
-  //   sm:"red",
-
-  // })
+// const [inputText,setinputText]=React.useState("")
   const status=useSelector((store)=>store.status)
+  const inputValue=useSelector((store)=>store.inputValue)
   const dispatch=useDispatch()
   const links=[
     {path:"/",title:"Home"},
@@ -29,11 +26,19 @@ const handleClick=()=>{
       <Flex alignItems={'center'} marginLeft={10}>
         <Heading size='xl' color='orange.400'>PRODUCTS</Heading>
         </Flex>
+        <Box w={'40%'}>
+        <InputGroup>
+    <InputLeftElement pointerEvents='none'>
+      <SearchIcon color='gray.300' />
+    </InputLeftElement>
+    <Input type='tel' placeholder='Product name' borderRadius={"15px"} border={"0.5px solid black"} onChange={(e)=>dispatch({type:"SETING_INPUTVALUE",payload:(e.target.value).toLowerCase()})}/>
+  </InputGroup>
+        </Box>
         <Box>
           <Stack direction={'row'} spacing={70} pr={50} align={'center'} >
             {
               links.map((link)=>(
-                <NavLink style={({isActive})=>({
+                <NavLink key={link.title} style={({isActive})=>({
                   color : isActive ? 'orange':"black",
                   // borderBottom:isActive?"2px solid teal":"none",
                   fontWeight:"bold",

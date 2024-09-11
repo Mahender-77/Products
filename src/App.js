@@ -10,7 +10,7 @@ import Register from './components/Register';
 import ProductDetails from './components/ProductDetails';
 function App() {
   return (
-    <div className="App">
+    <div style={{backgroundColor:"whitesmoke", border:"0.5px solid whitesmoke",minHeight:"100vh"}}>
       <BrowserRouter>
       <ChakraProvider>
       <Navbar />

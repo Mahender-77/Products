@@ -21,6 +21,11 @@ export const reducer=(state,{type,payload})=>{
                 ...state,
                 status:payload
             } 
+            case "SETING_INPUTVALUE":
+                return{
+                    ...state,
+                    inputValue:payload
+                } 
         default:
             return state
     }
