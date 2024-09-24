@@ -8,6 +8,7 @@ const intialState={
     status:false,
     todo:[],
     auth:false,
+    size:0
     }
 export const store =legacy_createStore(reducer,intialState)
 

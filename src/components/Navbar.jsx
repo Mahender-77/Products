@@ -1,15 +1,17 @@
 // src/Navbar.js
 import React from 'react';
-import { Box, Flex, Button, Stack, Heading ,Input,InputGroup,InputLeftElement} from '@chakra-ui/react';
+import { Box, Flex, Button, Stack, Heading ,Input,InputGroup,InputLeftElement,Text} from '@chakra-ui/react';
 import {NavLink} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 import {SearchIcon} from '@chakra-ui/icons'
+import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Navbar = () => {
-// const [inputText,setinputText]=React.useState("")
-  const status=useSelector((store)=>store.status)
-  const inputValue=useSelector((store)=>store.inputValue)
+
+  const size=useSelector((store)=>store.size)
+  
   const dispatch=useDispatch()
   const links=[
     {path:"/",title:"Home"},
@@ -19,6 +21,9 @@ const Navbar = () => {
   const navigate=useNavigate()
 const handleClick=()=>{
   navigate('/login')
+}
+const handleClick1=()=>{
+  navigate('/wishlist')
 }
     return (
     <Box boxShadow='md' px={10}  fontFamily='mono' position="fixed" top="0" zIndex="1"  width="100%" backgroundColor='white' >
@@ -38,7 +43,7 @@ const handleClick=()=>{
           <Stack direction={'row'} spacing={70} pr={50} align={'center'} >
             {
               links.map((link)=>(
-                <NavLink key={link.title} style={({isActive})=>({
+                <NavLink key={link.title} style={({isActive})=>( {
                   color : isActive ? 'orange':"black",
                   // borderBottom:isActive?"2px solid teal":"none",
                   fontWeight:"bold",
@@ -51,11 +56,12 @@ const handleClick=()=>{
               as="span"
               fontWeight="bold"
               fontSize="larger"
-              color={status?"orange":""}
               cursor="pointer"
-              onClick={()=>dispatch({type:"STATUS.",payload:!status})}
+              onClick={handleClick1}
+            
             >
-              Filter
+             {size!==0 && <Box w={"13px"} h={"13px"} borderRadius={"50%"}  position={"absolute"} bottom={"40px"} right={"220px"} backgroundColor={"red"} ><Text color={'white'} fontSize={"14px"} position={"relative"} bottom={'4px'} left={"3px"}>{size}</Text></Box>  } 
+           <FontAwesomeIcon icon={farHeart}/>
             </Box>
           {/* <DrawerButton/> */}
          

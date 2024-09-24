@@ -26,6 +26,11 @@ export const reducer=(state,{type,payload})=>{
                     ...state,
                     inputValue:payload
                 } 
+            case "WISHLIIST_SIZE":
+                return{
+                    ...state,
+                    size:payload
+                }    
         default:
             return state
     }

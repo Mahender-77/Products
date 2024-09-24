@@ -1,5 +1,5 @@
 import React from "react";
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import {
   Center,
   Box,
@@ -7,66 +7,93 @@ import {
   Grid,
   Button,
   Flex,
-  Collapse,
+
   Text,
-  Container,
+ 
+  Skeleton
 } from "@chakra-ui/react";
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import { db } from "./firebase";
 import Products from "./Products";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 
-function Home() {
+function Home ()  {
   const [products, setProducts] = React.useState([]);
   const [rawData, setRawData] = React.useState([]);
   const [status, setStatus] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const [open1, setOpen1] = React.useState(false);
+  const [range1,setRange1]= React.useState(null)
+  const [range2,setRange2]= React.useState(null)
+  const [loading,setLoading] =React.useState(false)
   const [category, setCategory] = React.useState("");
   const productData = collection(db, "Products");
   const inputText = useSelector((store) => store.inputValue);
 
-  const fetchData = async (inputText, category) => {
-    if (inputText) {
-      const productArray = rawData?.filter((item) =>
-        item.name.toLowerCase().includes(inputText.toLowerCase())
-      );
-      setProducts(productArray);
-    } else {
-      if (category) {
-        const q = query(productData, where("category", "==", category));
-        console.log(q);
-        const data = await getDocs(q);
-        console.log(data);
-        const productArray = data.docs.map((element) => ({
-          id: element.id,
-          ...element.data(),
-        }));
-        console.log(productArray);
+  const dispatch=useDispatch() 
+  const fetchData = async (inputText, category,range1,range2) => {
+    setLoading(true)
+    try {
+      if (inputText) {
+        const productArray = rawData?.filter((item) =>
+          item.name.toLowerCase().includes(inputText.toLowerCase())
+        );
+        
         setProducts(productArray);
-        setRawData(productArray);
       } else {
-        const data = await getDocs(productData);
-        const productArray = data.docs.map((element) => ({
-          id: element.id,
-          ...element.data(),
-        }));
-        setProducts(productArray);
-        setRawData(productArray);
+        if (category || (range1 && range2)) {
+            
+          let q = query(productData, where("category", "==", category));
+          if(range1 !== null && range2 !== null){
+          
+            q=query(q,where("price",">=",range1),where("price","<=",range2))
+        
+          }
+          const data = await getDocs(q);
+          const productArray = data.docs.map((element) => ({
+            id: element.id,
+            ...element.data(),
+          }));
+         
+          
+          setProducts(productArray);
+          setRawData(productArray);
+        } else {
+          const data = await getDocs(productData);
+          const productArray = data.docs.map((element) => ({
+            id: element.id,
+            ...element.data(),
+          }));
+          setProducts(productArray);
+          setRawData(productArray);
+        }
       }
+    } catch (error) { 
+      console.error("Error fetching products",error)
+    } finally{
+      setLoading(false)
+      const snapShot= query(collection(db, "Products"), where("state", "==", true))
+    const data=await getDocs(snapShot)
+    dispatch({type:"WISHLIIST_SIZE",payload:data.size})
     }
-  };
+  
+  }
+
+
   React.useEffect(() => {
-    fetchData(inputText, category);
-  }, [inputText, category]);
+    fetchData(inputText, category,range1,range2);
+  }, [category, range1, range2, inputText]);
   return (
     <Center bg={"whitesmoke"} w={"70%"} m={"auto"} mt={"100px"} mb={"30px"}>
-      {products.length && (
-        <Box>
-          <Button
+     
+        <Flex flexDirection={"column"} 
+>
+        
+          <Button display={products.length===0 ? "none":"block"}
             colorScheme="orange"
             variant="outline"
             size="sm"
+            w={"60px"}
             mb={"10px"}
             position={"sticky"}
             top={status ? "100px" : "0"}
@@ -74,8 +101,10 @@ function Home() {
           >
             Filter
           </Button>
+         
           <Flex>
             {status && (
+                <Skeleton isLoaded={!loading} fadeDuration={1} >
               <Box
                 position={"sticky"}
                 top={"140"}
@@ -116,7 +145,7 @@ function Home() {
                       p={"5px"}
                       fontWeight={"500"}
                       cursor={"pointer"}
-                      onClick={() => setCategory((prev)=>prev=="Electronics"?"":"Electronics")}
+                      onClick={() => setCategory((prev)=>prev==="Electronics"?"":"Electronics")}
                       color={category==="Electronics" ? "orange" : "black" }
                       borderBottom={category === "Electroincs" ? "2px solid  white" : "none"}
                     >
@@ -128,7 +157,7 @@ function Home() {
                       p={"5px"}
                       fontWeight={"500"}
                       cursor={"pointer"}
-                      onClick={() => setCategory((prev)=>prev=="Clothing"?"":"Clothing")}
+                      onClick={() => setCategory((prev)=>prev==="Clothing"?"":"Clothing")}
                       color={category==="Clothing" ? "orange" : "black" }
                       borderBottom={category === "Clothing" ? "2px solid  white" : "none"}
                     >
@@ -137,7 +166,8 @@ function Home() {
                   </Box>
                 )}
 
-                <Flex
+            { category && <Box>
+             <Flex
                   onClick={() => setOpen1(!open1)}
                   placeItems={"center"}
                   justifyContent={"space-between"}
@@ -164,36 +194,47 @@ function Home() {
                       p={"5px"}
                       fontWeight={"500"}
                       cursor={"pointer"}
-                      onClick={() => setOpen1(0, 50)}
+                      color={range1===0 ? "orange" : "black" }
+                      borderBottom={range1 === 0 ? "2px solid  white" : "none"}
+
+                      onClick={() => {setRange1((prev)=>prev===0?null:0); setRange2((prev)=>prev===50?null:50)}}
                     >
-                      Electronics
+                  0 to 50
                     </Text>
                     <Text
                       h={"35px"}
                       textAlign={"left"}
                       p={"5px"}
                       fontWeight={"500"}
-                      onClick={() => setOpen1(51, 100)}
+                      cursor={"pointer"}
+                      color={range1===51? "orange" : "black" }
+                      borderBottom={range1 === 51 ? "2px solid  white" : "none"}
+                      onClick={() => {setRange1((prev)=>prev===51?null:51); setRange2((prev)=>prev===100?null:100)}}
+                     
                     >
-                      Clothing
+                      51 to 100
                     </Text>
                   </Box>
                 )}
+             </Box>}
               </Box>
+              </Skeleton>
             )}
 
             <Box>
               <Grid templateColumns="repeat(4, 1fr)" gap={6}>
                 {products?.map((item) => (
                   <GridItem key={item.id}>
-                    <Products {...item} />
+                    <Skeleton isLoaded={!loading} fadeDuration={1}>
+                    <Products {...item} fetchData={fetchData} />
+                  </Skeleton>
                   </GridItem>
                 ))}
               </Grid>
             </Box>
           </Flex>
-        </Box>
-      )}
+        </Flex>
+      
     </Center>
   );
 }
