@@ -4,7 +4,7 @@ import '../styles/productDetails.css'
 import {getDoc,doc} from 'firebase/firestore'
 import { Text,Card,CardBody,Image,Stack,Heading, Center,Box, CardFooter,Button} from '@chakra-ui/react'
 import { db } from './firebase'
-import { useSelector } from 'react-redux'
+
 function ProductDetails() {
     const [data,setData]=React.useState([])
     const [loading,setLoading]=React.useState(false)
