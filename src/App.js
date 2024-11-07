@@ -8,10 +8,13 @@ import About from './components/About';
 import Login from './components/Login';
 import Register from './components/Register';
 import ProductDetails from './components/ProductDetails';
-import WhishList from './components/WhishList';
+
+import AddCart from './components/AddCart';
+
 function App() {
   return (
     <div style={{backgroundColor:"whitesmoke", border:"0.5px solid whitesmoke",minHeight:"100vh"}}>
+ 
       <BrowserRouter>
       <ChakraProvider>
       <Navbar />
@@ -21,7 +24,7 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/register' element={<Register/>}/>
           <Route path='/productDetails/:id' element={<ProductDetails/>}/>
-          <Route path='/wishlist' element={<WhishList/>}/>
+          <Route path='/AddCart' element={<AddCart/>}/>
        </Routes>
       </ChakraProvider>
     

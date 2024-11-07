@@ -1,5 +1,5 @@
 import React from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, limit, query, startAfter, startAt, where, orderBy} from "firebase/firestore";
 import {
   Center,
   Box,
@@ -7,7 +7,7 @@ import {
   Grid,
   Button,
   Flex,
-
+HStack,
   Text,
  
   Skeleton
@@ -16,6 +16,8 @@ import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import { db } from "./firebase";
 import Products from "./Products";
 import { useSelector,useDispatch } from "react-redux";
+import { fetchSizeFromFirestore } from "./middleware/fetchSizeFromFirestore";
+import Carousel from "./Carousel";
 
 function Home ()  {
   const [products, setProducts] = React.useState([]);
@@ -27,14 +29,21 @@ function Home ()  {
   const [range2,setRange2]= React.useState(null)
   const [loading,setLoading] =React.useState(false)
   const [category, setCategory] = React.useState("");
+  const [firstDoc,setFirstDoc]=React.useState(null)
+  const [lastDoc,setLastdoc]=React.useState(null)
+  const [page,setPage]=React.useState(1)
+  const [direction ,setDirection]=React.useState("")
   const productData = collection(db, "Products");
-  const inputText = useSelector((store) => store.inputValue);
+  const [docHistory, setDocHistory] = React.useState([]);
 
+  const inputText = useSelector((store) => store.inputValue);
+   
   const dispatch=useDispatch() 
   const fetchData = async (inputText, category,range1,range2) => {
     setLoading(true)
     try {
       if (inputText) {
+   
         const productArray = rawData?.filter((item) =>
           item.name.toLowerCase().includes(inputText.toLowerCase())
         );
@@ -59,22 +68,54 @@ function Home ()  {
           setProducts(productArray);
           setRawData(productArray);
         } else {
-          const data = await getDocs(productData);
+          let q
+          if(direction==="next"){
+            if(lastDoc){
+              console.log("lastDoc",lastDoc)
+              q=query(productData,startAfter(lastDoc),limit(16))
+              
+            }
+            else{
+              q=query(productData,limit(16))
+              
+            }
+          }
+          else if(direction==="prev"){
+            const previousDoc=docHistory[docHistory.length-2]
+            setDocHistory((prev) => prev.slice(0,-1));
+            if(previousDoc){
+            q=query(productData,startAt(previousDoc),limit(16))
+          }
+          else{
+            q = query(productData, limit(16));
+          }
+        }
+        else{
+          q=query(productData,limit(16))
+        }
+
+          const data = await getDocs(q);
+          console.log(data)
           const productArray = data.docs.map((element) => ({
             id: element.id,
             ...element.data(),
           }));
           setProducts(productArray);
           setRawData(productArray);
+          // const first=data.docs[0]
+          const last=data.docs[data.docs.length-1]
+          // setFirstDoc(first)
+          // setLastdoc(last)
         }
       }
     } catch (error) { 
       console.error("Error fetching products",error)
     } finally{
       setLoading(false)
-      const snapShot= query(collection(db, "Products"), where("state", "==", true))
-    const data=await getDocs(snapShot)
-    dispatch({type:"WISHLIIST_SIZE",payload:data.size})
+      dispatch({type:"SET_CART",payload:true})
+      dispatch(fetchSizeFromFirestore())
+      setPage((prevPage)=> direction==="next"?prevPage+1:prevPage>1?prevPage-1:1
+      )
     }
   
   }
@@ -82,14 +123,15 @@ function Home ()  {
 
   React.useEffect(() => {
     fetchData(inputText, category,range1,range2);
-  }, [category, range1, range2, inputText]);
+  }, [category, range1, range2, inputText,direction]);
   return (
-    <Center bg={"whitesmoke"} w={"70%"} m={"auto"} mt={"100px"} mb={"30px"}>
+    <>
+    {/* <Carousel/> */}
+    <Center bg={"whitesmoke"} w={"90%"} m={"auto"} mt={"150px"} mb={"30px"} >
      
-        <Flex flexDirection={"column"} 
->
+        <Flex flexDirection={"column"}>      
         
-          <Button display={products.length===0 ? "none":"block"}
+          <Button  display={products.length===0 ? "none":"block"}
             colorScheme="orange"
             variant="outline"
             size="sm"
@@ -104,7 +146,7 @@ function Home ()  {
          
           <Flex>
             {status && (
-                <Skeleton isLoaded={!loading} fadeDuration={1} >
+              
               <Box
                 position={"sticky"}
                 top={"140"}
@@ -163,6 +205,18 @@ function Home ()  {
                     >
                       Clothing
                     </Text>
+                    <Text
+                      h={"35px"}
+                      textAlign={"left"}
+                      p={"5px"}
+                      fontWeight={"500"}
+                      cursor={"pointer"}
+                      onClick={() => setCategory((prev)=>prev==="Footwear"?"":"Footwear")}
+                      color={category==="Footwear" ? "orange" : "black" }
+                      borderBottom={category === "Footwear" ? "2px solid  white" : "none"}
+                    >
+                      Footweare
+                    </Text>
                   </Box>
                 )}
 
@@ -218,7 +272,7 @@ function Home ()  {
                 )}
              </Box>}
               </Box>
-              </Skeleton>
+              
             )}
 
             <Box>
@@ -234,8 +288,16 @@ function Home ()  {
             </Box>
           </Flex>
         </Flex>
-      
+    
     </Center>
+      <Center m={'20px'}>
+        <HStack>
+          <Button disabled={page===1} onClick={()=>{setDirection("prev") }} >prev</Button>
+          <Button disabled>{page}</Button>
+          <Button onClick={()=>{setDirection("next")}}>next</Button>
+        </HStack>
+      </Center>
+    </>
   );
 }
 

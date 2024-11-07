@@ -4,6 +4,7 @@ function SearchBox({handleUpdate}) {
 
     const handleChange=(e)=>{
       const textVal=(e.target.value).toLowerCase()
+
       handleUpdate(textVal)
     }
   return (

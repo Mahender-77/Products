@@ -1,14 +1,12 @@
-import {legacy_createStore} from 'redux'
+import { legacy_createStore,applyMiddleware } from 'redux'
+import {thunk} from 'redux-thunk'
 import { reducer } from './reducer'
-// import {data} from  './db.json'
-const intialState={
+
+const initialState={
     inputValue:"",
-    value:"",
-    priceV:"",
-    status:false,
-    todo:[],
     auth:false,
-    size:0
+    count:0,
+    
     }
-export const store =legacy_createStore(reducer,intialState)
+export const store =legacy_createStore(reducer,initialState,applyMiddleware(thunk))
 

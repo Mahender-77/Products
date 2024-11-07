@@ -2,40 +2,46 @@ import React from 'react'
 // import style from '../styles/product.css'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import {Box,Card,CardBody,Image,Stack,Heading,Text,Flex} from '@chakra-ui/react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart as fasHeart } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
+import {Box,Card,CardBody,Image,Stack,Text,Flex,Button} from '@chakra-ui/react'
+import {BeatLoader} from 'react-spinners'
 import { db } from './firebase'
 import { doc,updateDoc } from "firebase/firestore";
-
-function Products({image,name,price,description,id,state,fetchData}) {
+import CartIcon from './CartIcon';
+import { useDispatch } from 'react-redux'
+import { fetchSizeFromFirestore } from './middleware/fetchSizeFromFirestore'
+function Products({image,name,price,description,id,state}) {
   const [stateHeart,setStateHeart]=React.useState(state)
+  const [loader,setLoader]=React.useState(false)
    const navigate=useNavigate()
    const auth=useSelector((store)=>store.auth)
-
+  
+   const dispatch=useDispatch()
   const handleClick=(id)=>{
 
     navigate(auth ? `/productDetails/${id}` : '/login')
   }
 
   const handleUpdate1= async(id)=>{
+    setLoader(true)
      const collectionRef=doc(db,"Products",id)
      await updateDoc(collectionRef,{
       state:!stateHeart
      })
      setStateHeart(!stateHeart)
-     fetchData()
+     dispatch(fetchSizeFromFirestore())
+     setLoader(false)
   }
+
+  
  
   return (
-    <Box  maxW='250px' >
+    <Box  maxW='300px'  >
       <Card >
   <CardBody>
     <Box onClick={()=>handleClick(id)} cursor={'pointer'}>
     <Image
-      w={"250px"}
-      h={"120px"}
+      w={"300px"}
+      h={"150px"}
       src={image}
       alt='Green double couch with wooden legs'
       borderRadius='lg'
@@ -43,7 +49,13 @@ function Products({image,name,price,description,id,state,fetchData}) {
     />
     <Stack mt='6' spacing='2'>
     
-      <Heading size='md' >{name}</Heading>
+      <Text fontSize={'xl'}  fontWeight={'670'}  overflow="hidden" sx={{
+        display: '-webkit-box',
+        WebkitLineClamp: 1,
+        WebkitBoxOrient: 'vertical',
+        textOverflow: 'ellipsis',
+        overflow: 'hidden',
+      }} >{name}</Text>
       <Text textAlign={'left'}  height={"50px"} pb={'15px'} overflow="hidden"
       sx={{
         display: '-webkit-box',
@@ -61,10 +73,13 @@ function Products({image,name,price,description,id,state,fetchData}) {
       <Text color='blue.600' fontSize='2xl' textAlign={'left'}  height={"35px"}>
         ${price}
       </Text>
- <Box onClick={()=>handleUpdate1(id)}>{ stateHeart?<FontAwesomeIcon style={{color:"red" ,fontSize:"20px"}} icon={fasHeart}/> :<FontAwesomeIcon  style={{ color: 'black', fontSize: '20px' ,opacity:"0.7"}}  icon={farHeart} />}</Box>
+ <Box >{!stateHeart?<Button  isLoading={loader}
+  colorScheme='blue'
+  spinner={<BeatLoader size={8} color='white' />}
+ 
+ onClick={()=>handleUpdate1(id)} size={"sm"}>Add to cart</Button>:<CartIcon handleUpdate1={handleUpdate1} id={id}/>}</Box>
     
       </Flex>
-    
 
     </CardBody>
     </Card>

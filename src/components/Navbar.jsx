@@ -5,14 +5,15 @@ import {NavLink} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 import {SearchIcon} from '@chakra-ui/icons'
-import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 const Navbar = () => {
 
-  const size=useSelector((store)=>store.size)
-  
   const dispatch=useDispatch()
+  const count=useSelector((store)=>store.count)
+  const setCart=useSelector((store)=>store.setCart)
+
+
   const links=[
     {path:"/",title:"Home"},
     {path:"/About",title:"About"}
@@ -23,13 +24,14 @@ const handleClick=()=>{
   navigate('/login')
 }
 const handleClick1=()=>{
-  navigate('/wishlist')
+  navigate('/AddCart')
+  dispatch({type:"SET_SIZE",payload:0})
 }
     return (
-    <Box boxShadow='md' px={10}  fontFamily='mono' position="fixed" top="0" zIndex="1"  width="100%" backgroundColor='white' >
+    <Box boxShadow='md' px={10}  fontFamily='mono' position="fixed" top="0" zIndex="1"  width="100%" backgroundColor='white'  >
       <Flex h={70} alignItems={'center'} justifyContent={'space-between'}>
       <Flex alignItems={'center'} marginLeft={10}>
-        <Heading size='xl' color='orange.400'>PRODUCTS</Heading>
+        <Heading size='xl' color='orange.400'>SHOP now</Heading>
         </Flex>
         <Box w={'40%'}>
         <InputGroup>
@@ -60,8 +62,11 @@ const handleClick1=()=>{
               onClick={handleClick1}
             
             >
-             {size!==0 && <Box w={"13px"} h={"13px"} borderRadius={"50%"}  position={"absolute"} bottom={"40px"} right={"220px"} backgroundColor={"red"} ><Text color={'white'} fontSize={"14px"} position={"relative"} bottom={'4px'} left={"3px"}>{size}</Text></Box>  } 
-           <FontAwesomeIcon icon={farHeart}/>
+             {count>0&&<Box w={"13px"} h={"13px"} borderRadius={"50%"}  position={"absolute"} bottom={"40px"} right={"220px"} backgroundColor={"red"} ><Text color={'white'} fontSize={"14px"} position={"relative"} bottom={'4px'} left={"3px"}>{count}</Text></Box>  } 
+             <svg style={{height:"20px"}} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+</svg>
+
             </Box>
           {/* <DrawerButton/> */}
          
